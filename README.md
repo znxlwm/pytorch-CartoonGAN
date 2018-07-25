@@ -19,7 +19,6 @@ Pytorch implementation of CartoonGAN [1]
 </tr>
 </table>
 
-
 * Catoonization
 <table align='center'>
 <tr align='center'>
@@ -41,6 +40,25 @@ Pytorch implementation of CartoonGAN [1]
 <td><img src = 'assets/Cartoonization_result5.png'>
 </tr>
 </table>
+
+
+## Folder structure
+The following shows basic folder structure.
+```
+├── data
+│   ├── src_data # src data (not included in this repo)
+│   │   ├── train 
+│   │   └── test
+│   └── tgt-data # fashion-mnist data (not included in this repo)
+│       ├── train 
+│       └── pair # edge-promoting results to be saved here
+│
+├── CartoonGAN.py
+├── edge_promoting.py
+├── utils.py
+├── networks.py
+└── name_results # results to be saved here
+```
 
 ## Development Environment
 
