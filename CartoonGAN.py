@@ -20,7 +20,7 @@ parser.add_argument('--ngf', type=int, default=64)
 parser.add_argument('--ndf', type=int, default=32)
 parser.add_argument('--nb', type=int, default=8, help='the number of resnet block layer for generator')
 parser.add_argument('--input_size', type=int, default=256, help='input size')
-parser.add_argument('--train_epoch', type=int, default=200)
+parser.add_argument('--train_epoch', type=int, default=100)
 parser.add_argument('--pre_train_epoch', type=int, default=10)
 parser.add_argument('--lrD', type=float, default=0.0002, help='learning rate, default=0.0002')
 parser.add_argument('--lrG', type=float, default=0.0002, help='learning rate, default=0.0002')
@@ -87,8 +87,8 @@ L1_loss = nn.L1Loss().to(device)
 # Adam optimizer
 G_optimizer = optim.Adam(G.parameters(), lr=args.lrG, betas=(args.beta1, args.beta2))
 D_optimizer = optim.Adam(D.parameters(), lr=args.lrD, betas=(args.beta1, args.beta2))
-G_scheduler = optim.lr_scheduler.MultiStepLR(optimizer=G_optimizer, milestones=[100, 150], gamma=0.1)
-D_scheduler = optim.lr_scheduler.MultiStepLR(optimizer=D_optimizer, milestones=[100, 150], gamma=0.1)
+G_scheduler = optim.lr_scheduler.MultiStepLR(optimizer=G_optimizer, milestones=[50, 75], gamma=0.1)
+D_scheduler = optim.lr_scheduler.MultiStepLR(optimizer=D_optimizer, milestones=[50, 75], gamma=0.1)
 
 pre_train_hist = {}
 pre_train_hist['Recon_loss'] = []
