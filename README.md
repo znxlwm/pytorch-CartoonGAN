@@ -1,7 +1,10 @@
 # pytorch-CartoonGAN
 Pytorch implementation of CartoonGAN [1]
-
+ * Parameters without information in the paper were set arbitrarily.
+ * Data used face-cropped celebA and anime.
 ## Resutls
+### paper results
+<img src = 'assets/paper_results.png'>
 ### celebA2anime face
 * Initialization phase (reconstruction)
 <table align='center'>
