@@ -5,6 +5,7 @@ Pytorch implementation of CartoonGAN [1]
 ## Resutls
 ### paper results
 <img src = 'assets/paper_results.png'>
+
 ### celebA2anime face
 * Initialization phase (reconstruction)
 <table align='center'>
