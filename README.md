@@ -39,7 +39,7 @@ Pytorch implementation of CartoonGAN [1]
 
 * NVIDIA GTX 1080 ti
 * cuda 8.0
-* Python 3.5.3
+* python 3.5.3
 * pytorch 0.4.0
 * torchvision 0.2.1
 * opencv 3.2.0
