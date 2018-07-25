@@ -19,6 +19,7 @@ Pytorch implementation of CartoonGAN [1]
 </tr>
 </table>
 
+
 * Catoonization
 <table align='center'>
 <tr align='center'>
