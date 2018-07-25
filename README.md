@@ -57,7 +57,7 @@ The following shows basic folder structure.
 │       ├── train 
 │       └── pair # edge-promoting results to be saved here
 │
-├── CartoonGAN.py
+├── CartoonGAN.py # training code
 ├── edge_promoting.py
 ├── utils.py
 ├── networks.py
