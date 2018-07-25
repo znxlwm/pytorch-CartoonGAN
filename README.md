@@ -9,7 +9,13 @@ Pytorch implementation of CartoonGAN [1]
 <td> Input - Result </td>
 </tr>
 <tr>
-<td><img src = 'assests/Initialzation_phase_result.png'>
+<td><img src = 'assests/Initialization_phase_result1.png'>
+</tr>
+<tr>
+<td><img src = 'assests/Initialization_phase_result2.png'>
+</tr>
+<tr>
+<td><img src = 'assests/Initialization_phase_result3.png'>
 </tr>
 </table>
 
