@@ -9,13 +9,13 @@ Pytorch implementation of CartoonGAN [1]
 <td> Input - Result </td>
 </tr>
 <tr>
-<td><img src = 'assests/Initialization_phase_result1.png'>
+<td><img src = 'assets/Initialization_phase_result1.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Initialization_phase_result2.png'>
+<td><img src = 'assets/Initialization_phase_result2.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Initialization_phase_result3.png'>
+<td><img src = 'assets/Initialization_phase_result3.png'>
 </tr>
 </table>
 
@@ -25,19 +25,19 @@ Pytorch implementation of CartoonGAN [1]
 <td> Input - Result </td>
 </tr>
 <tr>
-<td><img src = 'assests/Cartoonization_result1.png'>
+<td><img src = 'assets/Cartoonization_result1.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Cartoonization_result2.png'>
+<td><img src = 'assets/Cartoonization_result2.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Cartoonization_result3.png'>
+<td><img src = 'assets/Cartoonization_result3.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Cartoonization_result4.png'>
+<td><img src = 'assets/Cartoonization_result4.png'>
 </tr>
 <tr>
-<td><img src = 'assests/Cartoonization_result5.png'>
+<td><img src = 'assets/Cartoonization_result5.png'>
 </tr>
 </table>
 
