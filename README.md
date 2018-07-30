@@ -2,8 +2,17 @@
 Pytorch implementation of CartoonGAN [1] (CVPR 2018)
  * Parameters without information in the paper were set arbitrarily.
  * I used face-cropped celebA (src) and anime (tgt) collected from the web data because I could not find the author's data.
-## tensorflow version
+ 
+## Tensorflow version
 [CartoonGAN-tensorflow](https://github.com/taki0112/CartoonGAN-Tensorflow)
+
+## Usage
+### 1.Download VGG19
+[VGG19](https://download.pytorch.org/models/vgg19-dcbb9e9d.pth)
+### 2.Train
+```
+python CartoonGAN.py --name your_project_name --src_data src_data_path --tgt_data tgt_data_path --vgg_model pre_trained_VGG19_model_path
+```
 
 ## Resutls
 ### paper results
