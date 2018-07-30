@@ -61,7 +61,7 @@ class generator(nn.Module):
             nn.Conv2d(nf, nf, 3, 1, 1),
             nn.InstanceNorm2d(nf),
             nn.ReLU(True),
-            nn.Conv2d(nf, out_nc, 3, 1, 1),
+            nn.Conv2d(nf, out_nc, 7, 1, 3),
             nn.Tanh(),
         )
 
