@@ -2,6 +2,9 @@
 Pytorch implementation of CartoonGAN [1]
  * Parameters without information in the paper were set arbitrarily.
  * I used face-cropped celebA (src) and anime (tgt) collected from the web data because I could not find the author's data.
+## tensorflow version
+[CartoonGAN-tensorflow](https://github.com/taki0112/CartoonGAN-Tensorflow)
+
 ## Resutls
 ### paper results
 <img src = 'assets/paper_results.png'>
