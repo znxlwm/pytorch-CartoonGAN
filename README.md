@@ -13,7 +13,7 @@ Pytorch implementation of CartoonGAN [1]
 ### Initialization phase (reconstruction)
 <table align='center'>
 <tr align='center'>
-<td> Input - Result </td>
+<td> Input - Result (this repo) </td>
 </tr>
 <tr>
 <td><img src = 'assets/Initialization_phase_result1.png'>
@@ -30,34 +30,34 @@ Pytorch implementation of CartoonGAN [1]
 * I got the author's results from [CaroonGAN-Test-Pytorch-Torch](https://github.com/Yijunmaverick/CartoonGAN-Test-Pytorch-Torch).
 <table align='center'>
 <tr align='center'>
-<td> Input - Result </td>
+<td> Input - Result (this repo) </td>
 <td> Author's pre-trained model (Hayao) </td>
 <td> Author's pre-trained model (Hosoda) </td>
 </tr>
 <tr>
 <td><img src = 'assets/Cartoonization_result1.png'>
-<td><img src = 'assets/00055_Hayao.jpg'>
-<td><img src = 'assets/00055_Hosoda.jpg'>
+<td><img src = 'assets/00055_Hayao.jpg' height = '200px'>
+<td><img src = 'assets/00055_Hosoda.jpg' height = '200px'>
 </tr>
 <tr>
 <td><img src = 'assets/Cartoonization_result2.png'>
-<td><img src = 'assets/00009_Hayao.jpg'>
-<td><img src = 'assets/00009_Hosoda.jpg'>
+<td><img src = 'assets/00009_Hayao.jpg' height = '200px'>
+<td><img src = 'assets/00009_Hosoda.jpg' height = '200px'>
 </tr>
 <tr>
 <td><img src = 'assets/Cartoonization_result3.png'>
-<td><img src = 'assets/00010_Hayao.jpg'>
-<td><img src = 'assets/00010_Hosoda.jpg'>
+<td><img src = 'assets/00010_Hayao.jpg' height = '200px'>
+<td><img src = 'assets/00010_Hosoda.jpg' height = '200px'>
 </tr>
 <tr>
 <td><img src = 'assets/Cartoonization_result4.png'>
-<td><img src = 'assets/00155_Hayao.jpg'>
-<td><img src = 'assets/00155_Hosoda.jpg'>
+<td><img src = 'assets/00155_Hayao.jpg' height = '200px'>
+<td><img src = 'assets/00155_Hosoda.jpg' height = '200px'>
 </tr>
 <tr>
 <td><img src = 'assets/Cartoonization_result5.png'>
-<td><img src = 'assets/00014_Hayao.jpg'>
-<td><img src = 'assets/00014_Hosoda.jpg'>
+<td><img src = 'assets/00014_Hayao.jpg' height = '200px'>
+<td><img src = 'assets/00014_Hosoda.jpg' height = '200px'>
 </tr>
 </table>
 
