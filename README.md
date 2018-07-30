@@ -56,7 +56,7 @@ The following shows basic folder structure.
 │   ├── src_data # src data (not included in this repo)
 │   │   ├── train 
 │   │   └── test
-│   └── tgt_data # fashion-mnist data (not included in this repo)
+│   └── tgt_data # tgt data (not included in this repo)
 │       ├── train 
 │       └── pair # edge-promoting results to be saved here
 │
