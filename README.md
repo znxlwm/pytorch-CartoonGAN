@@ -13,6 +13,23 @@ Pytorch implementation of CartoonGAN [1] (CVPR 2018)
 ```
 python CartoonGAN.py --name your_project_name --src_data src_data_path --tgt_data tgt_data_path --vgg_model pre_trained_VGG19_model_path
 ```
+### Folder structure
+The following shows basic folder structure.
+```
+├── data
+│   ├── src_data # src data (not included in this repo)
+│   │   ├── train 
+│   │   └── test
+│   └── tgt_data # tgt data (not included in this repo)
+│       ├── train 
+│       └── pair # edge-promoting results to be saved here
+│
+├── CartoonGAN.py # training code
+├── edge_promoting.py
+├── utils.py
+├── networks.py
+└── name_results # results to be saved here
+```
 
 ## Resutls
 ### paper results
@@ -71,25 +88,6 @@ python CartoonGAN.py --name your_project_name --src_data src_data_path --tgt_dat
 </tr>
 </table>
 
-
-## Folder structure
-The following shows basic folder structure.
-```
-├── data
-│   ├── src_data # src data (not included in this repo)
-│   │   ├── train 
-│   │   └── test
-│   └── tgt_data # tgt data (not included in this repo)
-│       ├── train 
-│       └── pair # edge-promoting results to be saved here
-│
-├── CartoonGAN.py # training code
-├── edge_promoting.py
-├── utils.py
-├── networks.py
-└── name_results # results to be saved here
-```
-
 ## Development Environment
 
 * NVIDIA GTX 1080 ti
@@ -100,7 +98,6 @@ The following shows basic folder structure.
 * opencv 3.2.0
 
 ## Reference
+[1] Chen, Yang, Yu-Kun Lai, and Yong-Jin Liu. "CartoonGAN: Generative Adversarial Networks for Photo Cartoonization." Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018.
 
-[1] Lin, Jianxin, et al. "Conditional image-to-image translation." The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)(July 2018). 2018.
-
-(Full paper: http://openaccess.thecvf.com/content_cvpr_2018/papers/Lin_Conditional_Image-to-Image_Translation_CVPR_2018_paper.pdf)
+(Full paper: http://openaccess.thecvf.com/content_cvpr_2018/papers/Chen_CartoonGAN_Generative_Adversarial_CVPR_2018_paper.pdf)
