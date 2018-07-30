@@ -16,6 +16,7 @@ python CartoonGAN.py --name your_project_name --src_data src_data_path --tgt_dat
 
 ## Resutls
 ### paper results
+<img src = 'assets/paper_results2.png'>
 <img src = 'assets/paper_results.png'>
 
 ### celebA2anime face
