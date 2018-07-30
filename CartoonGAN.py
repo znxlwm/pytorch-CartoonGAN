@@ -256,4 +256,4 @@ print("Training finish!... save training results")
 torch.save(G.state_dict(), os.path.join(args.name + '_results',  'generator_param.pkl'))
 torch.save(D.state_dict(), os.path.join(args.name + '_results',  'discriminator_param.pkl'))
 with open(os.path.join(args.name + '_results',  'train_hist.pkl'), 'wb') as f:
-    pickle.dump(pre_train_hist, f)
+    pickle.dump(train_hist, f)
