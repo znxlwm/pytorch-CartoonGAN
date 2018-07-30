@@ -26,7 +26,7 @@ Pytorch implementation of CartoonGAN [1] (CVPR 2018)
 </tr>
 </table>
 
-### Catoonization
+### Cartoonization
 * I got the author's results from [CaroonGAN-Test-Pytorch-Torch](https://github.com/Yijunmaverick/CartoonGAN-Test-Pytorch-Torch).
 <table align='center'>
 <tr align='center'>
