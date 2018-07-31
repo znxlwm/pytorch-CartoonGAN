@@ -244,8 +244,8 @@ for epoch in range(args.train_epoch):
             if n == 4:
                 break
 
-        torch.save(G.state_dict(), os.path.join(args.name + '_results', 'generator_lately.pkl'))
-        torch.save(D.state_dict(), os.path.join(args.name + '_results', 'discriminator_lately.pkl'))
+        torch.save(G.state_dict(), os.path.join(args.name + '_results', 'generator_latest.pkl'))
+        torch.save(D.state_dict(), os.path.join(args.name + '_results', 'discriminator_latest.pkl'))
 
 total_time = time.time() - start_time
 train_hist['total_time'].append(total_time)
