@@ -101,7 +101,7 @@ start_time = time.time()
 for epoch in range(args.pre_train_epoch):
     epoch_start_time = time.time()
     Recon_losses = []
-    for iter, (x, _) in enumerate(train_loader_src):
+    for x, _ in train_loader_src:
         x = x.to(device)
 
         # train generator G
@@ -167,7 +167,6 @@ for epoch in range(args.train_epoch):
     Disc_losses = []
     Gen_losses = []
     Con_losses = []
-    iter = 0
     for (x, _), (y, _) in zip(train_loader_src, train_loader_tgt):
         e = y[:, :, :, args.input_size:]
         y = y[:, :, :, :args.input_size]
@@ -212,10 +211,6 @@ for epoch in range(args.train_epoch):
 
         Gen_loss.backward()
         G_optimizer.step()
-
-        iter += 1
-
-        break
 
 
     per_epoch_time = time.time() - epoch_start_time
