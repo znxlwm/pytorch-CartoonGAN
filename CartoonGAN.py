@@ -35,7 +35,8 @@ for k, v in sorted(vars(args).items()):
 print('-------------- End ----------------')
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-torch.backends.cudnn.benchmark = True
+if torch.backends.cudnn.enabled:
+    torch.backends.cudnn.benchmark = True
 
 # results save path
 if not os.path.isdir(os.path.join(args.name + '_results', 'Reconstruction')):
