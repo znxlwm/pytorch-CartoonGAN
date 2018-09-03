@@ -2,7 +2,6 @@ import torch, utils
 import torch.nn as nn
 import torch.nn.functional as F
 
-# resnet block with reflect padding
 class resnet_block(nn.Module):
     def __init__(self, channel, kernel, stride, padding):
         super(resnet_block, self).__init__()
