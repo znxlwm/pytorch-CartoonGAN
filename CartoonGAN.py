@@ -27,6 +27,8 @@ parser.add_argument('--lrG', type=float, default=0.0002, help='learning rate, de
 parser.add_argument('--con_lambda', type=float, default=10, help='lambda for content loss')
 parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for Adam optimizer')
 parser.add_argument('--beta2', type=float, default=0.999, help='beta2 for Adam optimizer')
+parser.add_argument('--latest_generator_model', required=False, default='', help='the latest trained model path')
+parser.add_argument('--latest_discriminator_model', required=False, default='', help='the latest trained model path')
 args = parser.parse_args()
 
 print('------------ Options -------------')
@@ -67,7 +69,19 @@ test_loader_src = utils.data_load(os.path.join('data', args.src_data), 'test', s
 
 # network
 G = networks.generator(args.in_ngc, args.out_ngc, args.ngf, args.nb)
+if args.latest_generator_model != '':
+    if torch.cuda.is_available():
+        G.load_state_dict(torch.load(args.latest_generator_model))
+    else:
+        # cpu mode
+        G.load_state_dict(torch.load(args.latest_generator_model, map_location=lambda storage, loc: storage))
+
 D = networks.discriminator(args.in_ndc, args.out_ndc, args.ndf)
+if args.latest_discriminator_model != '':
+    if torch.cuda.is_available():
+        D.load_state_dict(torch.load(args.latest_discriminator_model))
+    else:
+        D.load_state_dict(torch.load(args.latest_discriminator_model, map_location=lambda storage, loc: storage))
 VGG = networks.VGG19(init_weights=args.vgg_model, feature_mode=True)
 G.to(device)
 D.to(device)
@@ -97,58 +111,62 @@ pre_train_hist['per_epoch_time'] = []
 pre_train_hist['total_time'] = []
 
 """ Pre-train reconstruction """
-print('Pre-training start!')
-start_time = time.time()
-for epoch in range(args.pre_train_epoch):
-    epoch_start_time = time.time()
-    Recon_losses = []
-    for x, _ in train_loader_src:
-        x = x.to(device)
+if args.latest_generator_model == '':
+    print('Pre-training start!')
+    start_time = time.time()
+    for epoch in range(args.pre_train_epoch):
+        epoch_start_time = time.time()
+        Recon_losses = []
+        for x, _ in train_loader_src:
+            x = x.to(device)
 
-        # train generator G
-        G_optimizer.zero_grad()
+            # train generator G
+            G_optimizer.zero_grad()
 
-        x_feature = VGG((x + 1) / 2)
-        G_ = G(x)
-        G_feature = VGG((G_ + 1) / 2)
+            x_feature = VGG((x + 1) / 2)
+            G_ = G(x)
+            G_feature = VGG((G_ + 1) / 2)
 
-        Recon_loss = 10 * L1_loss(G_feature, x_feature.detach())
-        Recon_losses.append(Recon_loss.item())
-        pre_train_hist['Recon_loss'].append(Recon_loss.item())
+            Recon_loss = 10 * L1_loss(G_feature, x_feature.detach())
+            Recon_losses.append(Recon_loss.item())
+            pre_train_hist['Recon_loss'].append(Recon_loss.item())
 
-        Recon_loss.backward()
-        G_optimizer.step()
+            Recon_loss.backward()
+            G_optimizer.step()
 
-        break
-
-    per_epoch_time = time.time() - epoch_start_time
-    pre_train_hist['per_epoch_time'].append(per_epoch_time)
-    print('[%d/%d] - time: %.2f, Recon loss: %.3f' % ((epoch + 1), args.pre_train_epoch, per_epoch_time, torch.mean(torch.FloatTensor(Recon_losses))))
-
-total_time = time.time() - start_time
-pre_train_hist['total_time'].append(total_time)
-with open(os.path.join(args.name + '_results',  'pre_train_hist.pkl'), 'wb') as f:
-    pickle.dump(pre_train_hist, f)
-
-with torch.no_grad():
-    G.eval()
-    for n, (x, _) in enumerate(train_loader_src):
-        x = x.to(device)
-        G_recon = G(x)
-        result = torch.cat((x[0], G_recon[0]), 2)
-        path = os.path.join(args.name + '_results', 'Reconstruction', args.name + '_train_recon_' + str(n + 1) + '.png')
-        plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
-        if n == 4:
             break
 
-    for n, (x, _) in enumerate(test_loader_src):
-        x = x.to(device)
-        G_recon = G(x)
-        result = torch.cat((x[0], G_recon[0]), 2)
-        path = os.path.join(args.name + '_results', 'Reconstruction', args.name + '_test_recon_' + str(n + 1) + '.png')
-        plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
-        if n == 4:
-            break
+        per_epoch_time = time.time() - epoch_start_time
+        pre_train_hist['per_epoch_time'].append(per_epoch_time)
+        print('[%d/%d] - time: %.2f, Recon loss: %.3f' % ((epoch + 1), args.pre_train_epoch, per_epoch_time, torch.mean(torch.FloatTensor(Recon_losses))))
+
+    total_time = time.time() - start_time
+    pre_train_hist['total_time'].append(total_time)
+    with open(os.path.join(args.name + '_results',  'pre_train_hist.pkl'), 'wb') as f:
+        pickle.dump(pre_train_hist, f)
+
+    with torch.no_grad():
+        G.eval()
+        for n, (x, _) in enumerate(train_loader_src):
+            x = x.to(device)
+            G_recon = G(x)
+            result = torch.cat((x[0], G_recon[0]), 2)
+            path = os.path.join(args.name + '_results', 'Reconstruction', args.name + '_train_recon_' + str(n + 1) + '.png')
+            plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
+            if n == 4:
+                break
+
+        for n, (x, _) in enumerate(test_loader_src):
+            x = x.to(device)
+            G_recon = G(x)
+            result = torch.cat((x[0], G_recon[0]), 2)
+            path = os.path.join(args.name + '_results', 'Reconstruction', args.name + '_test_recon_' + str(n + 1) + '.png')
+            plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
+            if n == 4:
+                break
+else:
+    print('Load the latest generator model, no need to pre-train')
+
 
 train_hist = {}
 train_hist['Disc_loss'] = []
@@ -220,28 +238,29 @@ for epoch in range(args.train_epoch):
     '[%d/%d] - time: %.2f, Disc loss: %.3f, Gen loss: %.3f, Con loss: %.3f' % ((epoch + 1), args.train_epoch, per_epoch_time, torch.mean(torch.FloatTensor(Disc_losses)),
         torch.mean(torch.FloatTensor(Gen_losses)), torch.mean(torch.FloatTensor(Con_losses))))
 
-    with torch.no_grad():
-        G.eval()
-        for n, (x, _) in enumerate(train_loader_src):
-            x = x.to(device)
-            G_recon = G(x)
-            result = torch.cat((x[0], G_recon[0]), 2)
-            path = os.path.join(args.name + '_results', 'Transfer', str(epoch+1) + '_epoch_' + args.name + '_train_' + str(n + 1) + '.png')
-            plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
-            if n == 4:
-                break
+    if epoch % 2 == 1 or epoch == args.train_epoch - 1:
+        with torch.no_grad():
+            G.eval()
+            for n, (x, _) in enumerate(train_loader_src):
+                x = x.to(device)
+                G_recon = G(x)
+                result = torch.cat((x[0], G_recon[0]), 2)
+                path = os.path.join(args.name + '_results', 'Transfer', str(epoch+1) + '_epoch_' + args.name + '_train_' + str(n + 1) + '.png')
+                plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
+                if n == 4:
+                    break
 
-        for n, (x, _) in enumerate(test_loader_src):
-            x = x.to(device)
-            G_recon = G(x)
-            result = torch.cat((x[0], G_recon[0]), 2)
-            path = os.path.join(args.name + '_results', 'Transfer', str(epoch+1) + '_epoch_' + args.name + '_test_' + str(n + 1) + '.png')
-            plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
-            if n == 4:
-                break
+            for n, (x, _) in enumerate(test_loader_src):
+                x = x.to(device)
+                G_recon = G(x)
+                result = torch.cat((x[0], G_recon[0]), 2)
+                path = os.path.join(args.name + '_results', 'Transfer', str(epoch+1) + '_epoch_' + args.name + '_test_' + str(n + 1) + '.png')
+                plt.imsave(path, (result.cpu().numpy().transpose(1, 2, 0) + 1) / 2)
+                if n == 4:
+                    break
 
-        torch.save(G.state_dict(), os.path.join(args.name + '_results', 'generator_latest.pkl'))
-        torch.save(D.state_dict(), os.path.join(args.name + '_results', 'discriminator_latest.pkl'))
+            torch.save(G.state_dict(), os.path.join(args.name + '_results', 'generator_latest.pkl'))
+            torch.save(D.state_dict(), os.path.join(args.name + '_results', 'discriminator_latest.pkl'))
 
 total_time = time.time() - start_time
 train_hist['total_time'].append(total_time)
