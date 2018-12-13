@@ -134,8 +134,6 @@ if args.latest_generator_model == '':
             Recon_loss.backward()
             G_optimizer.step()
 
-            break
-
         per_epoch_time = time.time() - epoch_start_time
         pre_train_hist['per_epoch_time'].append(per_epoch_time)
         print('[%d/%d] - time: %.2f, Recon loss: %.3f' % ((epoch + 1), args.pre_train_epoch, per_epoch_time, torch.mean(torch.FloatTensor(Recon_losses))))
