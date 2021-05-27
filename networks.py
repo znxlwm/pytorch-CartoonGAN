@@ -1,7 +1,10 @@
-import torch, utils
+import torch
+from modules import utils
 import torch.nn as nn
 import torch.nn.functional as F
 
+
+# most similar to basic resnet block
 class resnet_block(nn.Module):
     def __init__(self, channel, kernel, stride, padding):
         super(resnet_block, self).__init__()
@@ -21,6 +24,8 @@ class resnet_block(nn.Module):
         x = self.conv2_norm(self.conv2(x))
 
         return input + x #Elementwise Sum
+        # todo are we missing another relu for the output?
+        # from the paper it seems we are not
  
 
 class generator(nn.Module):

@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch.nn as nn
 from torchvision import datasets
-from scipy.misc import imresize
 from torch.autograd import Variable
 
 def data_load(path, subfolder, transform, batch_size, shuffle=False, drop_last=True):

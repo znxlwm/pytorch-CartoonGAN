@@ -1,4 +1,5 @@
-import os, time, pickle, argparse, networks, utils
+import os, time, pickle, argparse, networks
+from modules import utils
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -8,9 +9,9 @@ from edge_promoting import edge_promoting
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--name', required=False, default='project_name',  help='')
-parser.add_argument('--src_data', required=False, default='src_data_path',  help='sec data path')
-parser.add_argument('--tgt_data', required=False, default='tgt_data_path',  help='tgt data path')
-parser.add_argument('--vgg_model', required=False, default='pre_trained_VGG19_model_path/vgg19.pth', help='pre-trained VGG19 model path')
+parser.add_argument('--src_data', required=False, default='/home/winfried_loetzsch/data/ffhq_1000',  help='sec data path')
+parser.add_argument('--tgt_data', required=False, default='/home/winfried_loetzsch/data/anime',  help='tgt data path')
+parser.add_argument('--vgg_model', required=False, default='vgg19-dcbb9e9d.pth', help='pre-trained VGG19 model path')
 parser.add_argument('--in_ngc', type=int, default=3, help='input channel for generator')
 parser.add_argument('--out_ngc', type=int, default=3, help='output channel for generator')
 parser.add_argument('--in_ndc', type=int, default=3, help='input channel for discriminator')

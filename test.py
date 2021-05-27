@@ -1,7 +1,6 @@
-import os, time, pickle, argparse, networks, utils
+import os, argparse, networks
+from modules import utils
 import torch
-import torch.nn as nn
-import torch.optim as optim
 import matplotlib.pyplot as plt
 from torchvision import transforms
 
