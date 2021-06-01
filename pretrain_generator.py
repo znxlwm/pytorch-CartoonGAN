@@ -8,7 +8,7 @@ from modules.generator import Generator
 
 class PretrainGeneratorModule(pl.LightningModule):
     def __init__(self, lr_pretrain=0.002, b1=0.5, b2=0.999, in_nc=3, out_nc=3, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__()
         self.save_hyperparameters()
         self.content_loss = ContentLoss()
         self.generator = Generator(in_nc, out_nc)

@@ -26,8 +26,8 @@ class CGModule(pl.LightningModule):
                  b2=0.999,
                  *args,
                  **kwargs):
-        super().__init__(*args, **kwargs)
-        self.save_hyperparameters('con_lambda', 'out_nc', 'in_nc', 'lr', 'b1', 'b2')
+        super().__init__()
+        self.save_hyperparameters('con_lambda', 'out_nc', 'in_nc', 'lr_g', 'lr_d', 'b1', 'b2')
 
         self.generator = pretrained_generator if pretrained_generator is not None else Generator(in_nc, out_nc)
         self.discriminator = Discriminator(in_nc, 1)
@@ -37,9 +37,10 @@ class CGModule(pl.LightningModule):
         return self.generator(z)
 
     def training_step(self, batch, batch_idx, optimizer_idx):
-        src, tgt, edge = batch
-        real = torch.ones(src.size(0), 1).type_as(src)
-        unreal = torch.zeros(src.size(0), 1).type_as(src)
+        src, tgt = batch
+        tgt, edge = tgt[:, :3], tgt[:, 3:]
+        real = torch.ones(src.size(0), 1, src.size(2) // 4, src.size(3) // 4).type_as(src)
+        unreal = torch.zeros(src.size(0), 1, src.size(2) // 4, src.size(3) // 4).type_as(src)
 
         if optimizer_idx == 0:
             g_out = self.generator(src)

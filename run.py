@@ -3,6 +3,7 @@ from argparse import ArgumentParser
 from pytorch_lightning import Trainer
 
 from cg_module import CGModule
+from data.data_module import DataModule
 from pretrain_generator import PretrainGeneratorModule
 
 
@@ -11,8 +12,9 @@ def main(args):
     pretrain_g = PretrainGeneratorModule(**dict_args)
     cg_module = CGModule(**dict_args)
 
+    data_module = DataModule(args.batch_size, args.n_workers, args.src_data, args.tgt_data)
     trainer = Trainer.from_argparse_args(args, max_epochs=dict_args["pre_train_epoch"])
-    trainer.fit(pretrain_g)
+    trainer.fit(cg_module, data_module)
 
 
 if __name__ == '__main__':
@@ -24,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--in_nc', type=int, default=3)
     parser.add_argument('--out_nc', type=int, default=3)
     parser.add_argument('--batch_size', type=int, default=8, help='batch size')
-    parser.add_argument('--n_workers', type=int, default=16, help='workers for data loader')
+    parser.add_argument('--n_workers', type=int, default=0, help='workers for data loader')
     parser.add_argument('--pre_train_epoch', type=int, default=10)
     parser.add_argument('--src_data', required=False, default='/home/winfried_loetzsch/data/ffhq_1000',
                         help='sec data path')
@@ -32,3 +34,4 @@ if __name__ == '__main__':
                         help='tgt data path')
 
     parser = CGModule.add_model_specific_args(parser)
+    main(parser.parse_args())
