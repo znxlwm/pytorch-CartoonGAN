@@ -36,6 +36,11 @@ class CGModule(pl.LightningModule):
     def forward(self, z):
         return self.generator(z)
 
+    @staticmethod
+    def set_requires_grad(model, requires_grad):
+        for param in model.parameters():
+            param.requires_grad = requires_grad
+
     def training_step(self, batch, batch_idx, optimizer_idx):
         src, tgt = batch
         tgt, edge = tgt[:, :3], tgt[:, 3:]
@@ -43,11 +48,9 @@ class CGModule(pl.LightningModule):
         unreal = torch.zeros(src.size(0), 1, src.size(2) // 4, src.size(3) // 4).type_as(src)
 
         if optimizer_idx == 0:
+            # train generator
+            self.set_requires_grad(self.discriminator, False)
             g_out = self.generator(src)
-
-            sample_imgs = g_out[:4]
-            grid = torchvision.utils.make_grid(sample_imgs)
-            self.logger.experiment.add_image('generated_images', grid, 0)
 
             d_unreal = self.discriminator(g_out)
             d_unreal_loss = adversarial_loss(d_unreal, real)
@@ -58,6 +61,8 @@ class CGModule(pl.LightningModule):
             return g_loss
 
         if optimizer_idx == 1:
+            # train discriminator
+            self.set_requires_grad(self.discriminator, True)
             d_real = self.discriminator(tgt)
             d_real_loss = adversarial_loss(d_real, real)
 
@@ -68,9 +73,15 @@ class CGModule(pl.LightningModule):
             d_edge = self.discriminator(edge)
             d_edge_loss = adversarial_loss(d_edge, unreal)
 
-            d_loss = d_real_loss + d_unreal_loss + d_edge_loss + d_edge_loss
+            d_loss = d_real_loss + d_unreal_loss + d_edge_loss
             self.log("d_loss", d_loss)
             return d_loss
+
+    def validation_step(self, batch, batch_idx):
+        # log sampled images
+        g_out = self.generator(batch)
+        grid = torchvision.utils.make_grid(g_out)
+        self.logger.experiment.add_image('generated_images', grid, self.current_epoch)
 
     def configure_optimizers(self):
         opt_g = Adam(self.generator.parameters(), lr=self.hparams.lr_g, betas=(self.hparams.b1, self.hparams.b2))
@@ -86,7 +97,7 @@ class CGModule(pl.LightningModule):
     @staticmethod
     def add_model_specific_args(parent_parser):
         parser = parent_parser.add_argument_group("Cartoon GAN")
-        parser.add_argument('--con_lambda', type=float, default=10.0)
+        parser.add_argument('--con_lambda', type=float, default=0.5)
         parser.add_argument('--lr_g', type=float, default=0.0002, help='learning rate generator')
         parser.add_argument('--lr_d', type=float, default=0.0002, help='learning rate discriminator')
         return parent_parser
