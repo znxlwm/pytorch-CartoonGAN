@@ -4,10 +4,12 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 
 
-def edge_promoting(root, save):
+def edge_promoting(root, save, save_cropped):
     file_list = os.listdir(root)
     if not os.path.isdir(save):
         os.makedirs(save)
+    if not os.path.isdir(save_cropped):
+        os.makedirs(save_cropped)
     kernel_size = 5
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     gauss = cv2.getGaussianKernel(kernel_size, 0)
@@ -63,4 +65,5 @@ def edge_promoting(root, save):
         result = np.concatenate((rgb_img, gauss_img), 1)
 
         cv2.imwrite(os.path.join(save, str(n) + '.png'), result)
+        cv2.imwrite(os.path.join(save_cropped, str(n) + '.png'), rgb_img)
         n += 1

@@ -50,7 +50,8 @@ if not os.path.isdir(os.path.join(args.name + '_results', 'Transfer')):
 # edge-promoting
 if not os.path.isdir(os.path.join('data', args.tgt_data, 'pair')):
     print('edge-promoting start!!')
-    edge_promoting(os.path.join('data', args.tgt_data, 'train'), os.path.join('data', args.tgt_data, 'pair'))
+    edge_promoting(os.path.join('data', args.tgt_data, 'train'), os.path.join('data', args.tgt_data, 'pair'),
+                   os.path.join('data', args.tgt_data, 'cropped'))
 else:
     print('edge-promoting already done')
 

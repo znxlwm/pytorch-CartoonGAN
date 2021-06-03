@@ -24,9 +24,7 @@ class resnet_block(nn.Module):
         x = self.conv2_norm(self.conv2(x))
 
         return input + x #Elementwise Sum
-        # todo are we missing another relu for the output?
-        # from the paper it seems we are not
- 
+
 
 class generator(nn.Module):
     # initializers
