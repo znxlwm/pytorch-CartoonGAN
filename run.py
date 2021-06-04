@@ -11,7 +11,7 @@ from pretrain_generator import PretrainGeneratorModule
 
 def run_main(args):
     dict_args = vars(args)
-    pretrain_g = PretrainGeneratorModule(**dict_args)
+    pretrain_g = PretrainGeneratorModule(**dict_args)  # Note: optionally use this module to pretrain generator
     cg_module = CGModule(**dict_args)
 
     data_module = DataModule(args.batch_size, args.n_workers, args.src_data, args.tgt_data)
@@ -30,22 +30,13 @@ def main():
     parser.add_argument('--batch_size', type=int, default=16, help='batch size')
     parser.add_argument('--n_workers', type=int, default=32, help='workers for data loader')
     parser.add_argument('--pre_train_epoch', type=int, default=10)
-    parser.add_argument('--src_data', required=False, default='/home/winfried_loetzsch/data/ffhq_1000',
+    parser.add_argument('--src_data', required=False, default='src_data_path',
                         help='sec data path')
-    parser.add_argument('--tgt_data', required=False, default='/home/winfried_loetzsch/data/anime',
+    parser.add_argument('--tgt_data', required=False, default='tgt_data_path',
                         help='tgt data path')
 
     parser = CGModule.add_model_specific_args(parser)
     run_main(parser.parse_args())
-
-
-def test_dataloader(idx):
-    data_module = DataModule(1, 0, '/home/winfried_loetzsch/data/ffhq_1000', '/home/winfried_loetzsch/data/anime')
-    data_module.setup()
-
-    for batch in data_module.train_dataloader()[idx]:
-        plt.imshow(torchvision.transforms.ToPILImage()(batch.squeeze()[:3]))
-        plt.show()
 
 
 if __name__ == '__main__':

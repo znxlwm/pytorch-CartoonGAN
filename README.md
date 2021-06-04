@@ -6,6 +6,18 @@ Pytorch implementation of CartoonGAN [1] (CVPR 2018)
 ## Tensorflow version
 [CartoonGAN-tensorflow](https://github.com/taki0112/CartoonGAN-Tensorflow)
 
+## Pytorch Lightning modules
+The PT Lightning modules are cg_module and pretrain_generator. Tested with (a subset of ~1000 images each) these datasets:
+
+- Source: [FFHQ Portraits](https://github.com/NVlabs/ffhq-dataset)
+- Target: [High Res. Anime dataset](https://www.kaggle.com/subinium/highresolution-anime-face-dataset-512x512)
+- Results:  
+![Result](assets/result_ptl.png)
+  
+Usage:
+Run CartoonGAN.py first to run edge promoting algorithm. Note that is has been extended to remove the black borders around anime faces for this dataset.
+When the edge promoting has finished either continue running the old version or use run.py for the PytorchLightning version.
+
 ## Usage
 ### 1.Download VGG19
 [VGG19](https://download.pytorch.org/models/vgg19-dcbb9e9d.pth)
