@@ -1,9 +1,11 @@
 from torch import nn
-import utils
 import torch.nn.functional as F
 
 
 # most similar to basic resnet block
+from modules import utils
+
+
 class resnet_block(nn.Module):
     def __init__(self, channel, kernel, stride, padding):
         super(resnet_block, self).__init__()
